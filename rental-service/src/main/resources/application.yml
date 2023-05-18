@@ -32,9 +32,9 @@ eureka:
 server:
   port: 0
 
-resilience4j:
-  retry:
-    instances:
-      inventorySearch:
-        max-Attempts: 20
-        waitDuration: 20s
+  resilience4j:
+    retry:
+      instances:
+        retry-rental-client:
+          max-attempts: 5
+          waitDuration: 7s
