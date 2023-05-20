@@ -3,16 +3,16 @@ package com.kodlamaio.commonpackage.utils.mappers;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
-public class ModelMapperManager implements ModelMapperService {
+public class ModelMapperManager implements ModelMapperService{
     private final ModelMapper mapper;
-
     @Override
     public ModelMapper forResponse() {
         mapper.getConfiguration()
-                .setAmbiguityIgnored(true)
-                .setMatchingStrategy(MatchingStrategies.LOOSE);
+                .setAmbiguityIgnored(true) //eşleşmelerde belirsizlik olan durumlarda hata versin mi (vermesin diyoruz)
+                .setMatchingStrategy(MatchingStrategies.LOOSE); //esnek olacak
 
         return mapper;
     }
@@ -21,7 +21,7 @@ public class ModelMapperManager implements ModelMapperService {
     public ModelMapper forRequest() {
         mapper.getConfiguration()
                 .setAmbiguityIgnored(true)
-                .setMatchingStrategy(MatchingStrategies.STANDARD);
+                .setMatchingStrategy(MatchingStrategies.STANDARD); //strict verirsek yeni kayıt oluşturuken id girmemek falan hataya sebep olur
 
         return mapper;
     }

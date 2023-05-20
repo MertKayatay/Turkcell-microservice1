@@ -38,7 +38,6 @@ public class CarManager implements CarService {
                 .stream()
                 .map(car -> mapper.forResponse().map(car, GetAllCarsResponse.class))
                 .toList();
-
         return response;
     }
 
@@ -47,15 +46,15 @@ public class CarManager implements CarService {
         rules.checkIfCarExists(id);
         var car = repository.findById(id).orElseThrow();
         var response = mapper.forResponse().map(car, GetCarResponse.class);
-
         return response;
     }
 
     @Override
     public CreateCarResponse add(CreateCarRequest request) {
-        var car = mapper.forRequest().map(request, Car.class);
+        rules.checkIfCarExistsByPlate(request.getPlate());
+        var car = mapper.forResponse().map(request, Car.class);
         car.setId(UUID.randomUUID());
-        car.setState(State.Available);
+        car.setState(State.Avaılable);
         var createdCar = repository.save(car);
         sendKafkaCarCreatedEvent(createdCar);
         var response = mapper.forResponse().map(createdCar, CreateCarResponse.class);
@@ -66,11 +65,10 @@ public class CarManager implements CarService {
     @Override
     public UpdateCarResponse update(UUID id, UpdateCarRequest request) {
         rules.checkIfCarExists(id);
-        var car = mapper.forRequest().map(request, Car.class);
+        var car = mapper.forResponse().map(request, Car.class);
         car.setId(id);
         repository.save(car);
         var response = mapper.forResponse().map(car, UpdateCarResponse.class);
-
         return response;
     }
 
@@ -85,16 +83,24 @@ public class CarManager implements CarService {
     public ClientResponse checkIfCarAvailable(UUID id) {
         var response = new ClientResponse();
         validateCarAvailability(id, response);
+        return response;
+    }
 
+    @Override
+    public ClientResponse checkIfCarAvailableForMaintenance(UUID id) {
+        var response = new ClientResponse();
+        validateCarAvailabilityForMaintenance(id, response);
         return response;
     }
 
     @Override
     public void changeStateByCarId(State state, UUID id) {
+        rules.checkIfCarExists(id);
         repository.changeStateByCarId(state, id);
     }
 
     private void sendKafkaCarCreatedEvent(Car createdCar) {
+        //asenkron olan kısım burası, buradan hata gelip gelmediğini beklemeden devam eder
         var event = mapper.forResponse().map(createdCar, CarCreatedEvent.class);
         producer.sendMessage(event, "car-created");
     }
@@ -107,6 +113,18 @@ public class CarManager implements CarService {
         try {
             rules.checkIfCarExists(id);
             rules.checkCarAvailability(id);
+            response.setSuccess(true);
+        } catch (BusinessException exception) {
+            response.setSuccess(false);
+            response.setMessage(exception.getMessage());
+        }
+    }
+
+    private void validateCarAvailabilityForMaintenance(UUID id, ClientResponse response) {
+        try {
+            rules.checkIfCarExists(id);
+            rules.checkIfCarUnderMaintenance(id);
+            rules.checkIfCarRented(id);
             response.setSuccess(true);
         } catch (BusinessException exception) {
             response.setSuccess(false);

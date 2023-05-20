@@ -31,7 +31,7 @@ public class RentalConsumer {
     )
     public void consume(RentalDeletedEvent event) {
         var filter = service.getByCarId(event.getCarId());
-        filter.setState("Available");
+        filter.setState("Avaılable");
         service.add(filter);
         log.info("Rental deleted event consumed {}", event);
     }

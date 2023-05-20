@@ -16,7 +16,8 @@ public class GetAllCarsResponse {
     private UUID id;
     private UUID modelId;
     private int modelYear;
-    private String plate;
     private State state;
+    private String plate;
     private double dailyPrice;
+
 }

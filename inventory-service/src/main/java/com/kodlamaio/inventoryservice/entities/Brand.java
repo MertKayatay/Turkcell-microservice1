@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "brands")
@@ -20,7 +20,7 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
-
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
     private List<Model> models;
+
 }

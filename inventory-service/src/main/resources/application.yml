@@ -1,24 +1,24 @@
 spring:
   application:
-    name: inventory-service
+    name: INVENTORY-SERVICE
   datasource:
+    password: 1
+    url: jdbc:postgresql://localhost:5433/inventorydb-t1
     username: postgres
-    password: '12345'
-    url: jdbc:postgresql://localhost:5432/inventorydb-t1
   jpa:
+    hibernate:
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: update
   kafka:
     producer:
-      bootstrap-servers: http://192.168.1.102:9092
+      bootstrap-servers: http://localhost:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       auto-offset-reset: earliest
-      bootstrap-servers: 192.168.1.102:9092
+      bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
         spring:
@@ -35,5 +35,6 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${random.value}
     prefer-ip-address: true
+
 server:
   port: 0

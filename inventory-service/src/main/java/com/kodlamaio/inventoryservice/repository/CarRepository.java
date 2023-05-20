@@ -7,11 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface CarRepository extends JpaRepository<Car, UUID> {
+    List<Car> findAllByStateIsNot(State state);
+    boolean existsByPlateIgnoreCase(String plate);
     @Modifying
     @Transactional
-    @Query(value = "update Car set state =:state where id =:id")
+    @Query(value="update Car set state =:state where id =:id") //SPel
     void changeStateByCarId(State state, UUID id);
 }

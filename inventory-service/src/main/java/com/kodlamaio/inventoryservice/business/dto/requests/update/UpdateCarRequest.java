@@ -20,16 +20,19 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UpdateCarRequest {
     @NotNull
+    @NotBlank
     private UUID modelId;
     @Min(value = 2000)
     @NotFutureYear
     private int modelYear;
+    @NotNull
     @NotBlank
     @Pattern(regexp = Regex.Plate)
     private String plate;
     @NotNull
+    @NotBlank
     private State state;
     @Min(value = 1)
     private double dailyPrice;
-}
 
+}

@@ -25,5 +25,5 @@ public class Filter {
     private String plate;
     private int modelYear;
     private double dailyPrice;
-    private String state;
+    private String state; //databaseden çekeceğiz herhangi bir ekleme yapılmayacak o yüzden enum olmasa da oluyor
 }

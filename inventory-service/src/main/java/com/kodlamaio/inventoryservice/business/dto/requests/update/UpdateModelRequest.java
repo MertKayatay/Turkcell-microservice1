@@ -16,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UpdateModelRequest {
     @NotNull
+    @NotBlank
     private UUID brandId;
     @NotBlank
     @Size(min = 2, max = 20)

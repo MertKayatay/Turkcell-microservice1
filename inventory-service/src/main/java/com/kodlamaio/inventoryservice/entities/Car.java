@@ -10,8 +10,8 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "cars")
@@ -26,6 +26,6 @@ public class Car {
     private double dailyPrice;
 
     @ManyToOne
-    @JoinColumn(name = "model_id")
+    @JoinColumn(name ="model_id")
     private Model model;
 }
