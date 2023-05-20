@@ -37,4 +37,4 @@ server:
       instances:
         retry-rental-client:
           max-attempts: 5
-          waitDuration: 7s
+          waitDuration: 10s
