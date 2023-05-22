@@ -7,6 +7,7 @@ import com.kodlamaio.inventoryservice.business.dto.responses.create.CreateModelR
 import com.kodlamaio.inventoryservice.business.dto.responses.get.GetAllModelsResponse;
 import com.kodlamaio.inventoryservice.business.dto.responses.get.GetModelResponse;
 import com.kodlamaio.inventoryservice.business.dto.responses.update.UpdateModelResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,24 +22,23 @@ public class ModelsController {
     private final ModelService service;
 
     @GetMapping
-    public List<GetAllModelsResponse> findAll(){
+    public List<GetAllModelsResponse> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public GetModelResponse findModelById(@PathVariable UUID id) {
-
+    public GetModelResponse getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateModelResponse add(@RequestBody CreateModelRequest request) {
+    public CreateModelResponse add(@Valid @RequestBody CreateModelRequest request) {
         return service.add(request);
     }
 
     @PutMapping("/{id}")
-    public UpdateModelResponse update(@PathVariable UUID id, @RequestBody UpdateModelRequest request) {
+    public UpdateModelResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateModelRequest request) {
         return service.update(id, request);
     }
 

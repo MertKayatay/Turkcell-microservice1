@@ -12,9 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = NotFutureYearValidator.class)
 public @interface NotFutureYear {
-    String message() default "Year value cannot be in the future!";
-
+    String message() default "Year value cannot be in the future";
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 }

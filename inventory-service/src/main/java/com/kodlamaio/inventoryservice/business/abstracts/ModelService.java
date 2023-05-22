@@ -1,5 +1,6 @@
 package com.kodlamaio.inventoryservice.business.abstracts;
 
+
 import com.kodlamaio.inventoryservice.business.dto.requests.create.CreateModelRequest;
 import com.kodlamaio.inventoryservice.business.dto.requests.update.UpdateModelRequest;
 import com.kodlamaio.inventoryservice.business.dto.responses.create.CreateModelResponse;

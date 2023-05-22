@@ -14,4 +14,5 @@ import java.util.UUID;
 public class GetAllBrandsResponse {
     private UUID id;
     private String name;
+//    private List<GetAllModelsResponse> models;
 }

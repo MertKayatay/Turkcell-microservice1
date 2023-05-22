@@ -16,11 +16,11 @@ services:
       - mongodb_data:/data/db
   mysql:
     image: mysql
-    container_name: maintenancedbt1
+    container_name: maintenancedb
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=maintenancedbt1
+      - MYSQL_DATABASE=maintenancedb
       - MYSQL_USER=mysql
       - MYSQL_TCP_PORT=3307
       - VIRTUAL_PORT=3307

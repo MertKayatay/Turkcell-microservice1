@@ -1,5 +1,6 @@
 package com.kodlamaio.inventoryservice.business.dto.responses.get;
 
+
 import com.kodlamaio.inventoryservice.entities.enums.State;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,8 +17,7 @@ public class GetAllCarsResponse {
     private UUID id;
     private UUID modelId;
     private int modelYear;
-    private State state;
     private String plate;
+    private State state;
     private double dailyPrice;
-
 }

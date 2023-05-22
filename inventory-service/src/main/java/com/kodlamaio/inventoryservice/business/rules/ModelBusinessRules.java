@@ -10,12 +10,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ModelBusinessRules {
     private final ModelRepository repository;
-    public void checkIfModelExistsById(UUID id) {
-        if (!repository.existsById(id)) throw new IllegalArgumentException("Model Not Exists");//BusinessException(Messages.Model.NotExists);
-    }
 
-    public void checkIfModelExistsByName(String name) {
-        if (repository.existsByNameIgnoreCase(name))
-            throw new IllegalArgumentException("Model Exists");//BusinessException(Messages.Model.Exists);
+    public void checkIfModelExists(UUID id) {
+        if (!repository.existsById(id)) {
+            // TODO: BusinessException
+            throw new RuntimeException("MODEL_NOT_EXISTS");
+        }
     }
 }

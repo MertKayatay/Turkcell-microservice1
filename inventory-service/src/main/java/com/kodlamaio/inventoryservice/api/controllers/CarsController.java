@@ -23,12 +23,12 @@ public class CarsController {
     private final CarService service;
 
     @GetMapping
-    public List<GetAllCarsResponse> findAll(){
+    public List<GetAllCarsResponse> getAll() {
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public GetCarResponse findCarById(@PathVariable UUID id) {
+    public GetCarResponse getById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -39,8 +39,8 @@ public class CarsController {
     }
 
     @PutMapping("/{id}")
-    public UpdateCarResponse update(@PathVariable UUID id, @RequestBody UpdateCarRequest request){
-        return  service.update(id, request);
+    public UpdateCarResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateCarRequest request) {
+        return service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
@@ -50,7 +50,7 @@ public class CarsController {
     }
 
     @GetMapping("/check-car-available/{id}")
-    public ClientResponse chechIfCarAvailable(@PathVariable UUID id) {
+    public ClientResponse checkIfCarAvailable(@PathVariable UUID id) {
         return service.checkIfCarAvailable(id);
     }
     @GetMapping("/check-car-available-for-maintenance/{id}")

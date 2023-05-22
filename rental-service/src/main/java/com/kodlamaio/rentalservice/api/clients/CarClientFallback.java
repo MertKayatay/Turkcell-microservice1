@@ -1,19 +1,27 @@
 package com.kodlamaio.rentalservice.api.clients;
 
 import com.kodlamaio.commonpackage.utils.dto.ClientResponse;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.retry.annotation.Retry;
+
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 @Slf4j
 @Component
-public class CarClientFallback implements CarClient{
+@EnableScheduling
+public class CarClientFallback implements CarClient {
+
+    //@Scheduled(fixedRate = 5000)
     @Override
+
     public ClientResponse checkIfCarAvailable(UUID carId) {
-        log.info("CAR SERVICE IS DOWN");
-        throw new RuntimeException("INVENTORY SERVICE IS DOWN");
+        log.info("INVENTORY SERVICE IS DOWN!");
+        throw new RuntimeException("INVENTORY SERVICE IS DOWN!");
     }
 }

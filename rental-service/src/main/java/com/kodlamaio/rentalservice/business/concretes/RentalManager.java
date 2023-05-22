@@ -2,16 +2,16 @@ package com.kodlamaio.rentalservice.business.concretes;
 
 import com.kodlamaio.commonpackage.events.rental.RentalCreatedEvent;
 import com.kodlamaio.commonpackage.events.rental.RentalDeletedEvent;
+import com.kodlamaio.commonpackage.utils.dto.CreateRentalPaymentRequest;
 import com.kodlamaio.commonpackage.utils.kafka.producer.KafkaProducer;
 import com.kodlamaio.commonpackage.utils.mappers.ModelMapperService;
-import com.kodlamaio.rentalservice.api.clients.CarClient;
 import com.kodlamaio.rentalservice.business.abstracts.RentalService;
 import com.kodlamaio.rentalservice.business.dto.requests.CreateRentalRequest;
 import com.kodlamaio.rentalservice.business.dto.requests.UpdateRentalRequest;
-import com.kodlamaio.rentalservice.business.dto.response.CreateRentalResponse;
-import com.kodlamaio.rentalservice.business.dto.response.GetAllRentalsResponse;
-import com.kodlamaio.rentalservice.business.dto.response.GetRentalResponse;
-import com.kodlamaio.rentalservice.business.dto.response.UpdateRentalResponse;
+import com.kodlamaio.rentalservice.business.dto.responses.CreateRentalResponse;
+import com.kodlamaio.rentalservice.business.dto.responses.GetAllRentalsResponse;
+import com.kodlamaio.rentalservice.business.dto.responses.GetRentalResponse;
+import com.kodlamaio.rentalservice.business.dto.responses.UpdateRentalResponse;
 import com.kodlamaio.rentalservice.business.rules.RentalBusinessRules;
 import com.kodlamaio.rentalservice.entities.Rental;
 import com.kodlamaio.rentalservice.repository.RentalRepository;
@@ -57,6 +57,12 @@ public class RentalManager implements RentalService {
         rental.setId(null);
         rental.setTotalPrice(getTotalPrice(rental));
         rental.setRentedAt(LocalDate.now());
+
+        CreateRentalPaymentRequest paymentRequest = new CreateRentalPaymentRequest();
+        mapper.forResponse().map(request.getPaymentRequest(), paymentRequest);
+        paymentRequest.setPrice(getTotalPrice(rental));
+        rules.ensurePaymentValid(paymentRequest);
+
         repository.save(rental);
         sendKafkaRentalCreatedEvent(request.getCarId());
         var response = mapper.forResponse().map(rental, CreateRentalResponse.class);

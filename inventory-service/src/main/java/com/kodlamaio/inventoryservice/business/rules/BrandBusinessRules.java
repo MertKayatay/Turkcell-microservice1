@@ -10,11 +10,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class BrandBusinessRules {
     private final BrandRepository repository;
-    public void checkIfBrandExistsById(UUID id) {
-        if (!repository.existsById(id)) throw new IllegalArgumentException("Brand Not Exists");//BusinessException(Messages.Brand.NotExists);
-    }
-    public void checkIfBrandExistsByName(String name){
-        if (repository.existsByNameIgnoreCase(name))
-            throw new IllegalArgumentException("Brand Exists");//BusinessException(Messages.Brand.Exists);
+
+    public void checkIfBrandExists(UUID id) {
+        if (!repository.existsById(id)) {
+            // TODO: BusinessException
+            throw new RuntimeException("BRAND_NOT_EXISTS");
+        }
     }
 }

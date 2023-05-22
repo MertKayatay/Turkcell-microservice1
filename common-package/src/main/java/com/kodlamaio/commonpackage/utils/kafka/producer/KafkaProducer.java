@@ -14,7 +14,7 @@ public class KafkaProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public <T extends Event> void sendMessage(T event, String topic) {
-        log.info(String.format(topic + " event => %s", event.toString()));
+        log.info(String.format("%s event => %s", topic, event.toString()));
         Message<T> message = MessageBuilder
                 .withPayload(event)
                 .setHeader(KafkaHeaders.TOPIC, topic)
@@ -22,5 +22,4 @@ public class KafkaProducer {
 
         kafkaTemplate.send(message);
     }
-
 }
