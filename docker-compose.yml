@@ -7,20 +7,27 @@ services:
       - "9092:9092"
     volumes:
       - kafka_data:/opt/kafka/kafka-logs
-  mongodb:
+  mongodb_filter:
     container_name: turkcell-filterdb
     image: mongo
     ports:
       - "27017:27017"
     volumes:
-      - mongodb_data:/data/db
+      - mongodb_filter_data:/data/db
+  mongodb_invoice:
+    container_name: turkcell-invoicedb
+    image: mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_invoice_data:/data/db
   mysql:
     image: mysql
-    container_name: maintenancedb
+    container_name: maintenancedb-t1
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=maintenancedb
+      - MYSQL_DATABASE=maintenancedb-t1
       - MYSQL_USER=mysql
       - MYSQL_TCP_PORT=3307
       - VIRTUAL_PORT=3307
@@ -32,5 +39,6 @@ services:
       - mysqldb_data:/data/db
 volumes:
   kafka_data:
-  mongodb_data:
+  mongodb_filter_data:
+  mongodb_invoice_data:
   mysqldb_data:

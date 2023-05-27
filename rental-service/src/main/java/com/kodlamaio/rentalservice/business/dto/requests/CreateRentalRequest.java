@@ -22,6 +22,5 @@ public class CreateRentalRequest {
     @Min(1)
     private int rentedForDays;
     // TODO: Credit Card Information
-
     private PaymentRequest paymentRequest;
 }

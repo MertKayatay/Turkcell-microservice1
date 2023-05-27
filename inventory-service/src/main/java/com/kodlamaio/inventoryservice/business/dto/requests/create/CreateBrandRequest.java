@@ -8,13 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CreateBrandRequest {
-
     @NotBlank
-    @Size(min=2,max=20)
+    @Size(min = 2, max = 20)
     private String name;
 }

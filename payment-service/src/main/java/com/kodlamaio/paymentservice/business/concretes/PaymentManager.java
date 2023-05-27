@@ -56,7 +56,6 @@ public class PaymentManager implements PaymentService {
         payment.setId(null);
         repository.save(payment);
         CreatePaymentResponse response = mapper.map(payment, CreatePaymentResponse.class);
-
         return response;
     }
 
@@ -82,8 +81,6 @@ public class PaymentManager implements PaymentService {
         var response = new ClientResponse();
         validatePayment(request,response);
         return response;
-
-
     }
 
     private void validatePayment(CreateRentalPaymentRequest request,ClientResponse response){

@@ -1,5 +1,6 @@
 package com.kodlamaio.inventoryservice.api.controllers;
 
+import com.kodlamaio.commonpackage.events.inventory.CarCreatedEvent;
 import com.kodlamaio.commonpackage.utils.dto.ClientResponse;
 import com.kodlamaio.inventoryservice.business.abstracts.CarService;
 import com.kodlamaio.inventoryservice.business.dto.requests.create.CreateCarRequest;
@@ -23,12 +24,12 @@ public class CarsController {
     private final CarService service;
 
     @GetMapping
-    public List<GetAllCarsResponse> getAll() {
+    public List<GetAllCarsResponse> findAll(){
         return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public GetCarResponse getById(@PathVariable UUID id) {
+    public GetCarResponse findCarById(@PathVariable UUID id) {
         return service.getById(id);
     }
 
@@ -39,8 +40,8 @@ public class CarsController {
     }
 
     @PutMapping("/{id}")
-    public UpdateCarResponse update(@PathVariable UUID id, @Valid @RequestBody UpdateCarRequest request) {
-        return service.update(id, request);
+    public UpdateCarResponse update(@PathVariable UUID id, @RequestBody UpdateCarRequest request){
+        return  service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
@@ -50,11 +51,16 @@ public class CarsController {
     }
 
     @GetMapping("/check-car-available/{id}")
-    public ClientResponse checkIfCarAvailable(@PathVariable UUID id) {
+    public ClientResponse chechIfCarAvailable(@PathVariable UUID id) {
         return service.checkIfCarAvailable(id);
     }
     @GetMapping("/check-car-available-for-maintenance/{id}")
     public ClientResponse checkIfCarAvailableForMaintenance(@PathVariable UUID id) {
         return service.checkIfCarAvailableForMaintenance(id);
+    }
+
+    @GetMapping("/carinfo/{id}")
+    public CarCreatedEvent getByIdForRental(@PathVariable UUID id) {
+        return service.getByIdForRental(id);
     }
 }

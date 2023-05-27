@@ -15,5 +15,4 @@ public class GetAllModelsResponse {
     private UUID id;
     private UUID brandId;
     private String name;
-    private String brandName;
 }

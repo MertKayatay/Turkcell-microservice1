@@ -1,5 +1,6 @@
 package com.kodlamaio.maintenanceservice.business.concretes;
 
+import com.kodlamaio.commonpackage.events.maintenance.MaintenanceCompletedChangeEvent;
 import com.kodlamaio.commonpackage.events.maintenance.MaintenanceCreatedEvent;
 import com.kodlamaio.commonpackage.events.maintenance.MaintenanceDeletedEvent;
 import com.kodlamaio.commonpackage.utils.kafka.producer.KafkaProducer;
@@ -106,5 +107,9 @@ public class MaintenanceManager implements MaintenanceService {
 
     private void sendKafkaMaintenanceDeletedEvent(UUID carId) {
         producer.sendMessage(new MaintenanceDeletedEvent(carId), "maintenance-deleted");
+    }
+
+    private void sendKafkaMaintenanceCompletedChangeEvent(UUID carId) {
+        producer.sendMessage(new MaintenanceCompletedChangeEvent(carId), "maintenance-completed-changed");
     }
 }

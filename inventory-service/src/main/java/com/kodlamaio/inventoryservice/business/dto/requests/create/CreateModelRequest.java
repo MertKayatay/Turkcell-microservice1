@@ -10,14 +10,15 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Getter
 @Setter
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CreateModelRequest {
     @NotNull
+    @NotBlank
     private UUID brandId;
     @NotBlank
-    @Size(min = 2,max=20)
+    @Size(min = 2, max = 20)
     private String name;
 }
