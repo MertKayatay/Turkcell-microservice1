@@ -6,6 +6,6 @@ spring:
       server:
         default-label: master
         git:
-          uri: https://github.com/MelisaDe/config-server-t1
+          uri: https://github.com/MertKayatay/Gelecegi-yazanlar-rentacar-microservice-config
 server:
   port: 8888
